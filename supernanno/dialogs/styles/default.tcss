@@ -1,0 +1,185 @@
+/* dialogs/styles/default.tcss */
+
+
+/* =========================
+   GLOBAL
+========================= */
+
+Screen {
+    background: transparent;
+}
+
+
+/* =========================
+   MODAL OVERLAY
+========================= */
+
+MessageDialog {
+    align: center middle;
+    background: rgba(0, 0, 0, 0.55);
+}
+
+
+/* =========================
+   DIALOG CONTAINER
+========================= */
+
+#dialog {
+
+    width: 60;
+    min-height: 12;
+
+    background: #202020;
+
+    border: round #5f87ff;
+
+    padding: 1 2;
+
+    color: white;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+#title {
+
+    width: 100%;
+
+    text-style: bold;
+
+    color: #5f87ff;
+
+    margin-bottom: 1;
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+#message {
+
+    width: 100%;
+
+    color: white;
+
+    margin-bottom: 2;
+}
+
+
+/* =========================
+   BUTTON CONTAINER
+========================= */
+
+#buttons {
+
+    width: 100%;
+
+    height: auto;
+
+    align-horizontal: right;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+Button {
+
+    min-width: 12;
+
+    margin-left: 1;
+
+    background: #303030;
+
+    color: white;
+
+    border: none;
+}
+
+
+/* =========================
+   BUTTON STATES
+========================= */
+
+Button:hover {
+
+    background: #5f87ff;
+
+    color: white;
+}
+
+
+Button:focus {
+
+    background: #5f87ff;
+
+    text-style: bold;
+}
+
+
+Button.-active {
+
+    background: #5f87ff;
+}
+
+
+/* =========================
+   DIALOG TYPES
+========================= */
+
+
+/* INFO */
+
+.info {
+
+    border: round #5f87ff;
+}
+
+
+/* WARNING */
+
+.warning {
+
+    border: round #ffaf00;
+}
+
+
+/* ERROR */
+
+.error {
+
+    border: round #ff005f;
+}
+
+
+/* SUCCESS */
+
+.success {
+
+    border: round #00af5f;
+}
+
+
+/* =========================
+   TYPE TITLE COLORS
+========================= */
+
+.info #title {
+    color: #5f87ff;
+}
+
+.warning #title {
+    color: #ffaf00;
+}
+
+.error #title {
+    color: #ff005f;
+}
+
+.success #title {
+    color: #00af5f;
+}
