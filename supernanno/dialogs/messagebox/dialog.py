@@ -1,76 +1,87 @@
+# dialogs/messagebox/dialog.py
+
+from __future__ import annotations
+
+from typing import Callable
+
 from textual.screen import ModalScreen
 from textual.containers import Vertical, Horizontal
 from textual.widgets import Label, Button
+from dialogs.styles import bindings
+
 
 class MessageDialog(ModalScreen):
-    DEFAULT_CSS = """
-    MessageDialog {
-        align: center middle;
-        background: rgba(0,0,0,0.55);
-    }
+    # print(bindings.CSS_FILE)
+    CSS_PATH = bindings.CSS_FILE
 
-    #dialog {
-        width: 60;
-        height: auto;
+    # DEFAULT_CSS = """
+    # MessageDialog {
+    #     align: center middle;
+    #     background: rgba(0,0,0,0.55);
+    # }
 
-        background: #202020;
+    # #dialog {
+    #     width: 60;
+    #     height: auto;
 
-        border: round #5f87ff;
+    #     background: #202020;
 
-        padding: 1 2;
-    }
+    #     border: round #5f87ff;
 
-    #title {
-        text-style: bold;
-        margin-bottom: 1;
-    }
+    #     padding: 1 2;
+    # }
 
-    #message {
-        margin-bottom: 2;
-    }
+    # #title {
+    #     text-style: bold;
+    #     margin-bottom: 1;
+    # }
 
-    #buttons {
-        align-horizontal: right;
-        height: auto;
-    }
+    # #message {
+    #     margin-bottom: 2;
+    # }
 
-    Button {
-        margin-left: 1;
-        min-width: 12;
-    }
+    # #buttons {
+    #     align-horizontal: right;
+    #     height: auto;
+    # }
 
-    .info {
-        border: round #5f87ff;
-    }
+    # Button {
+    #     margin-left: 1;
+    #     min-width: 12;
+    # }
 
-    .warning {
-        border: round #ffaf00;
-    }
+    # .info {
+    #     border: round #5f87ff;
+    # }
 
-    .error {
-        border: round #ff005f;
-    }
+    # .warning {
+    #     border: round #ffaf00;
+    # }
 
-    .success {
-        border: round #00af5f;
-    }
-    """
+    # .error {
+    #     border: round #ff005f;
+    # }
 
-    ICONS = {
+    # .success {
+    #     border: round #00af5f;
+    # }
+    # """
+
+    ICONS: dict[str, str] = {
         "info": "ℹ",
         "warning": "⚠",
         "error": "✖",
-        "success": "✔"
+        "success": "✔",
     }
 
     def __init__(
         self,
         message: str,
         title: str,
-        buttons: list,
+        buttons: list[str],
         dialog_type: str = "info",
-        callback=None
-    ):
+        callback: Callable[[str], None] | None = None,
+    ) -> None:
         super().__init__()
 
         self.message = message
@@ -81,42 +92,35 @@ class MessageDialog(ModalScreen):
 
     def compose(self):
 
-        icon = self.ICONS.get(
-            self.dialog_type,
-            "ℹ"
-        )
+        icon = self.ICONS.get(self.dialog_type, "ℹ")
 
         dialog = Vertical(
             Label(
                 f"{icon}  {self.title}",
-                id="title"
+                id="title",
             ),
 
             Label(
                 self.message,
-                id="message"
+                id="message",
             ),
 
             Horizontal(
                 *[
-                    Button(
-                        label,
-                        id=label.lower()
-                    )
+                    Button(label, id=label.lower())
                     for label in self.buttons
                 ],
-
-                id="buttons"
+                id="buttons",
             ),
 
-            id="dialog"
+            id="dialog",
         )
 
         dialog.add_class(self.dialog_type)
 
         yield dialog
 
-    def on_button_pressed(self, event: Button.Pressed):
+    def on_button_pressed(self, event: Button.Pressed) -> None:
         button = str(event.button.label)
 
         if self.callback:
