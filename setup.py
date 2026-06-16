@@ -13,7 +13,7 @@ setup(
         ]
     },
     install_requires=[
-        "textual==8.2.3",
+        "textual==8.2.7",
         "supernanno>=0.0.23"
     ],
     author="Heitor Bardemaker A. Bisneto",

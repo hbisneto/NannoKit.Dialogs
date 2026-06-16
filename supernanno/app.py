@@ -1,4 +1,4 @@
-from dialogs import messagebox 
+from dialogs import messagebox
 
 def resposta(btn):
     print(f"Usuário clicou em: {btn}")
