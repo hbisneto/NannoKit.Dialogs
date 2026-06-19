@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Teste rápido dos novos dialogs OpenFile e OpenFolder
+Teste aprimorado dos dialogs OpenFile e OpenFolder para SuperNanno.
 Execute com: python test_file_dialogs.py
 """
 
@@ -8,17 +8,20 @@ from pathlib import Path
 from textual.app import App, ComposeResult
 from textual.widgets import Button, Footer, Header, Label
 
-# Importando os dialogs que você vai adicionar ao pacote
-# (copie os arquivos que eu gerei antes para supernanno/dialogs/filedialogs/)
-# from supernanno.dialogs import OpenFile, OpenFolder
-from dialogs.filedialogs import OpenFile, OpenFolder
-import os
+# from supernanno.dialogs.filedialogs import OpenFile, OpenFolder
+from dialogs.filedialogs import OpenFile, OpenFolder  # ajuste conforme sua estrutura
 
 
 class TestDialogsApp(App):
     """App de teste para OpenFile e OpenFolder."""
 
     TITLE = "Teste SuperNanno.Dialogs - File & Folder"
+    # CSS = """
+    # .center {
+    #     text-align: center;
+    #     padding: 2 4;
+    # }
+    # """
 
     def compose(self) -> ComposeResult:
         yield Header()
@@ -26,7 +29,8 @@ class TestDialogsApp(App):
             "Pressione:\n"
             "• F → OpenFile\n"
             "• D → OpenFolder\n"
-            "• Q → Sair",
+            "• Q → Sair\n\n"
+            "Navegue com as setas / Enter na árvore.",
             classes="center",
         )
         yield Footer()
@@ -40,37 +44,33 @@ class TestDialogsApp(App):
             self.exit()
 
     def action_open_file(self) -> None:
-        """Teste OpenFile."""
-
         def callback(path: Path | None):
             if path:
                 if path.is_file():
                     self.notify(f"✅ Selected file:\n{path}", timeout=8)
                 else:
-                    self.notify(f"⚠️ The selected path is not a file:\n{path}", timeout=10)
+                    self.notify(f"⚠️ The selected path is NOT a file:\n{path}\n(is_file: {path.is_file()})", timeout=10)
             else:
                 self.notify("❌ Operation cancelled")
         self.push_screen(OpenFile(location=".", callback=callback))
 
     def action_open_folder(self) -> None:
-        """Teste OpenFolder."""
-
         def callback(path: Path | None):
             if path:
-                caminho_absoluto = path.resolve()
+                abs_path = path.resolve()
                 
-                # 2. Diagnóstico: Mostra no terminal o que o Python realmente está avaliando
-                self.notify(f"--- DEBUG ---")
-                self.notify(f"Caminho recebido: {path}")
-                self.notify(f"Caminho absoluto resolvido: {caminho_absoluto}")
-                self.notify(f"Existe no sistema? {caminho_absoluto.exists()}")
-                self.notify(f"É um arquivo? {caminho_absoluto.is_file()}")
-                self.notify(f"É uma pasta? {caminho_absoluto.is_dir()}")
-                self.notify(f"-------------")
-                if caminho_absoluto.is_dir():
-                    self.notify(f"📁 Selected folder:\n{path}\nisDir: {caminho_absoluto}", timeout=8)
+                self.notify("--- DEBUG INFO ---", timeout=12)
+                self.notify(f"Received: {path}")
+                self.notify(f"Resolved: {abs_path}")
+                self.notify(f"Exists: {abs_path.exists()}")
+                self.notify(f"is_file(): {abs_path.is_file()}")
+                self.notify(f"is_dir(): {abs_path.is_dir()}")
+                self.notify("-----------------")
+
+                if abs_path.is_dir():
+                    self.notify(f"📁 Selected folder:\n{path}", timeout=8)
                 else:
-                    self.notify(f"⚠️ The selected path is not a folder:\n{path}", timeout=10)
+                    self.notify(f"⚠️ The selected path is NOT a folder:\n{path}", timeout=10)
             else:
                 self.notify("❌ Operation cancelled")
         self.push_screen(OpenFolder(location=".", callback=callback))
