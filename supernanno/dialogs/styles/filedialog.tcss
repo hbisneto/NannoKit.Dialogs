@@ -1,0 +1,40 @@
+/* dialogs/styles/filedialog.tcss */
+
+FileDialogBase {
+    align: center middle;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+#dialog {
+    width: 85%;
+    height: 75%;
+    background: #202020;
+    border: round #5f87ff;
+    padding: 1 2;
+}
+
+.label {
+    text-style: bold;
+    margin-top: 1;
+    color: #5f87ff;
+}
+
+DirectoryTree {
+    height: 1fr;
+    margin-bottom: 1;
+}
+
+#buttons {
+    height: auto;
+    align-horizontal: right;
+    margin-top: 1;
+}
+
+Button {
+    min-width: 14;
+    margin-left: 1;
+}
+
+Button#select {
+    background: #00af5f;
+}
