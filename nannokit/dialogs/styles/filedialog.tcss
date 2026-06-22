@@ -1,0 +1,65 @@
+/* supernanno/dialogs/styles/filedialog.tcss */
+
+FileSystemDialogBase {
+    align: center middle;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+#dialog {
+    width: 85%;
+    height: 80%;
+    background: #202020;
+    border: round #5f87ff;
+    padding: 1 2;
+}
+
+.label {
+    text-style: bold;
+    margin-top: 1;
+    color: #5f87ff;
+}
+
+#path_input {
+    margin-bottom: 1;
+}
+
+#tree {
+    height: 1fr;
+    margin-bottom: 1;
+    border: round #303030;
+}
+
+#filename_input {
+    margin-bottom: 1;
+}
+
+#status {
+    height: auto;
+    min-height: 1;
+    color: #00af5f;
+}
+
+#status.-error {
+    color: #ff005f;
+    text-style: bold;
+}
+
+#buttons {
+    height: auto;
+    dock: bottom;
+    align-horizontal: right;
+    margin-top: 1;
+}
+
+#buttons Button {
+    min-width: 14;
+    margin-left: 1;
+}
+
+#buttons Button#select {
+    background: #00af5f;
+}
+
+#buttons Button#cancel {
+    background: #303030;
+}

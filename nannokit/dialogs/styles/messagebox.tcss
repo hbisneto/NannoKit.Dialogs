@@ -1,13 +1,4 @@
-/* dialogs/styles/default.tcss */
-
-/* =========================
-   GLOBAL
-========================= */
-
-Screen {
-    background: transparent;
-}
-
+/* supernanno/dialogs/styles/messagebox.tcss */
 
 /* =========================
    MODAL OVERLAY
@@ -73,11 +64,11 @@ MessageDialog {
    BUTTONS
 ========================= */
 
-Button {
+#dialog Button {
     height: 3;
     min-width: 12;
     margin-left: 1;
-    background: #FF0000;
+    background: #303030;
     color: white;
     border: none;
     padding: 0 2;
@@ -89,57 +80,36 @@ Button {
    BUTTON STATES
 ========================= */
 
-Button:hover {
+#dialog Button:hover {
     background: #5f87ff;
     color: white;
 }
 
-Button:focus {
+#dialog Button:focus {
     background: #5f87ff;
     text-style: bold;
 }
 
-Button.-active {
-    background: #5f87ff;
-}
-
 
 /* =========================
-   DIALOG TYPES
+   DIALOG TYPES (border + accent)
 ========================= */
-
-
-/* INFO */
 
 .info {
     border: round #5f87ff;
 }
 
-
-/* WARNING */
-
 .warning {
     border: round #ffaf00;
 }
-
-
-/* ERROR */
 
 .error {
     border: round #ff005f;
 }
 
-
-/* SUCCESS */
-
 .success {
     border: round #00af5f;
 }
-
-
-/* =========================
-   TYPE TITLE COLORS
-========================= */
 
 .info #title {
     color: #5f87ff;
