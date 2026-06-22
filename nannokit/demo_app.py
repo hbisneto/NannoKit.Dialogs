@@ -17,10 +17,13 @@ without it, since they're all triggered from inside key bindings.
 from __future__ import annotations
 
 from pathlib import Path
+
 from textual.app import App, ComposeResult
 from textual.widgets import Footer, Header, Label
-from nannokit.dialogs import OpenFile, OpenFolder, SaveFile, messagebox
-from nannokit.dialogs.core import DialogManager
+
+from dialogs import OpenFile, OpenFolder, SaveFile, messagebox
+from dialogs.core import DialogManager
+
 
 class DemoApp(App):
     """Minimal host App exercising every nannokit.dialogs dialog."""

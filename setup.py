@@ -3,7 +3,7 @@ from setuptools import setup, find_namespace_packages
 
 setup(
     name="nannokit_dialogs",
-    version="0.0.8",
+    version="0.0.10",
     description="Official dialogs extension for SuperNanno",
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",

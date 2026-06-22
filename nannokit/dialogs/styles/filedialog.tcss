@@ -1,48 +1,96 @@
 /* supernanno/dialogs/styles/filedialog.tcss */
 
+/* =============================================================================
+   FileDialog — Style (baseado no style.tcss do SuperNanno)
+   ============================================================================= */
+
+$primary: #7c84ec;
+$accent: #454990;
+$background: #1F1F1F;
+$surface: #141414;
+$text: #ffffff;
+$muted: #94a3b8;
+
+/* =========================
+   MODAL OVERLAY
+========================= */
+
 FileSystemDialogBase {
     align: center middle;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.65);
 }
+
+
+/* =========================
+   DIALOG CONTAINER
+========================= */
 
 #dialog {
     width: 85%;
     height: 80%;
-    background: #202020;
-    border: round #5f87ff;
+    background: $surface;
+    border: round $accent;
     padding: 1 2;
 }
+
+
+/* =========================
+   LABELS
+========================= */
 
 .label {
     text-style: bold;
     margin-top: 1;
-    color: #5f87ff;
+    color: $primary;
 }
+
+
+/* =========================
+   PATH INPUT
+========================= */
 
 #path_input {
     margin-bottom: 1;
+    background: $background;
+    color: $text;
+    border: tall $muted;
 }
+
+#path_input:focus {
+    border: tall $primary;
+}
+
+
+/* =========================
+   TREE (DirectoryTree)
+========================= */
 
 #tree {
     height: 1fr;
     margin-bottom: 1;
-    border: round #303030;
+    border: round $muted;
+    background: $background;
 }
+
+
+/* =========================
+   FILENAME INPUT
+========================= */
 
 #filename_input {
     margin-bottom: 1;
+    background: $background;
+    color: $text;
+    border: tall $muted;
 }
 
-#status {
-    height: auto;
-    min-height: 1;
-    color: #00af5f;
+#filename_input:focus {
+    border: tall $primary;
 }
 
-#status.-error {
-    color: #ff005f;
-    text-style: bold;
-}
+/* =========================
+   BUTTON CONTAINER
+========================= */
 
 #buttons {
     height: auto;
@@ -54,12 +102,42 @@ FileSystemDialogBase {
 #buttons Button {
     min-width: 14;
     margin-left: 1;
+    height: 3;
+    padding: 0 2;
+    content-align: center middle;
 }
+
+
+/* =========================
+   BUTTON SELECT (Confirmar)
+========================= */
 
 #buttons Button#select {
-    background: #00af5f;
+    background: #22c55e;
+    color: $surface;
+    text-style: bold;
+    border: round $muted;
 }
 
+#buttons Button#select:hover {
+    background: #4ade80;
+    color: $surface;
+    border: round $muted;
+}
+
+
+/* =========================
+   BUTTON CANCEL
+========================= */
+
 #buttons Button#cancel {
-    background: #303030;
+    background: $background;
+    color: $muted;
+    border: round $muted;
+}
+
+#buttons Button#cancel:hover {
+    color: $text;
+    border: round $primary;
+    background: $accent;
 }
