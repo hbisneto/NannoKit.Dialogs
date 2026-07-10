@@ -1,0 +1,122 @@
+/* supernanno/dialogs/styles/messagebox.tcss */
+
+/* =============================================================================
+   MessageBox — Style (baseado no style.tcss do SuperNanno)
+   ============================================================================= */
+
+$primary: #7c84ec;
+$accent: #454990;
+$background: #1F1F1F;
+$surface: #141414;
+$text: #ffffff;
+$muted: #94a3b8;
+
+/* =========================
+   MODAL OVERLAY
+========================= */
+
+MessageDialog {
+   align: center middle;
+   background: rgba(0, 0, 0, 0.65);
+}
+
+/* =========================
+   DIALOG CONTAINER
+========================= */
+
+#messagebox-dialog {
+   width: 60;
+   height: auto;
+   min-height: 13;
+   background: $surface;
+   border: round $accent;
+   padding: 2;
+   color: $text;
+}
+
+/* =========================
+   TITLE
+========================= */
+
+#messagebox-title {
+   width: 100%;
+   text-style: bold;
+   color: $primary;
+   margin-bottom: 1;
+   text-align: center;
+}
+
+/* =========================
+   MESSAGE
+========================= */
+
+#messagebox-message {
+   width: 100%;
+   color: $text;
+   margin-bottom: 2;
+   text-align: center;
+}
+
+/* =========================
+   BUTTON CONTAINER
+========================= */
+
+#messagebox-buttons {
+   width: 100%;
+   height: auto;
+   dock: bottom;
+   align-horizontal: center;
+   margin-top: 1;
+}
+
+/* =========================
+   BUTTONS (estilo consistente com #btn_save / #btn_cancel)
+========================= */
+
+#messagebox-dialog Button {
+   height: 3;
+   min-width: 14;
+   margin: 0 1;
+   background: $background;
+   color: $text;
+   border: round $muted;           /* round para evitar artefatos */
+   padding: 0 3;
+   content-align: center middle;
+}
+
+/* =========================
+   BUTTON STATES
+========================= */
+
+#messagebox-dialog Button:hover {
+   background: $accent;
+   color: $text;
+   border: round $primary;
+}
+
+#messagebox-dialog Button:focus {
+   background: $primary;
+   color: $text;           /* branco no roxo */
+   text-style: bold;
+   border: round $primary;
+}
+
+/* =========================
+   DIALOG TYPES (info, warning, error, success)
+========================= */
+
+.messagebox-info {
+    border: round $primary;
+}
+
+.messagebox-warning {
+    border: round #f59e0b;
+}
+
+.messagebox-error {
+    border: round #ef4444;
+}
+
+.messagebox-success {
+    border: round #22c55e;
+}
