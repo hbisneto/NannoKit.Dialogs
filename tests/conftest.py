@@ -5,7 +5,7 @@ from __future__ import annotations
 from textual.app import App, ComposeResult
 from textual.widgets import Label
 
-from nannokit.dialogs.core import DialogManager
+from nannokit.dialogs.core import DialogManager, DialogQueue
 
 
 class HostApp(App):
@@ -15,5 +15,7 @@ class HostApp(App):
         yield Label("host")
 
     def on_unmount(self) -> None:
-        # Don't let one test's attached app leak into the next.
+        # Don't let one test's attached app / dialog bookkeeping leak
+        # into the next.
         DialogManager.detach()
+        DialogQueue.reset()

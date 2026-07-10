@@ -48,7 +48,7 @@ async def test_open_file_accepts_an_existing_file(tmp_path: Path):
         await pilot.pause()
         assert isinstance(app.screen, FileSystemDialogBase)
 
-        await pilot.click("#select")
+        await pilot.click("#filedialogs-select")
         await pilot.pause()
 
     assert results == [target.resolve()]
@@ -70,14 +70,14 @@ async def test_open_file_must_exist_blocks_a_missing_file(tmp_path: Path):
         await pilot.press("d")
         await pilot.pause()
 
-        await pilot.click("#select")
+        await pilot.click("#filedialogs-select")
         await pilot.pause()
 
         # Invalid selection -> dialog stays open, callback not invoked.
         assert isinstance(app.screen, FileSystemDialogBase)
         assert results == []
-        status = app.screen.query_one("#status")
-        assert "does not exist" in str(status.renderable)
+        status = app.screen.query_one("#filedialogs-status")
+        assert "does not exist" in str(status.content)
 
 
 @pytest.mark.asyncio
@@ -124,7 +124,7 @@ async def test_open_file_multiselect_returns_sorted_paths(tmp_path: Path):
         screen._toggle_selected(a.resolve())
         screen._toggle_selected(b.resolve())
 
-        await pilot.click("#select")
+        await pilot.click("#filedialogs-select")
         await pilot.pause()
 
     assert results == [sorted([a.resolve(), b.resolve()])]
@@ -144,7 +144,7 @@ async def test_open_folder_returns_the_initial_directory_by_default(tmp_path: Pa
         await pilot.press("d")
         await pilot.pause()
 
-        await pilot.click("#select")
+        await pilot.click("#filedialogs-select")
         await pilot.pause()
 
     assert results == [tmp_path.resolve()]
@@ -157,7 +157,7 @@ async def test_open_folder_has_no_filename_input(tmp_path: Path):
     async with app.run_test() as pilot:
         await pilot.press("d")
         await pilot.pause()
-        assert len(app.screen.query("#filename_input")) == 0
+        assert len(app.screen.query("#filedialogs-filename_input")) == 0
 
 
 # -- Path navigation --------------------------------------------------------
@@ -175,12 +175,12 @@ async def test_typing_a_path_navigates_the_tree(tmp_path: Path):
         await pilot.pause()
         screen = app.screen
 
-        path_input = screen.query_one("#path_input", Input)
+        path_input = screen.query_one("#filedialogs-path_input", Input)
         screen.post_message(Input.Submitted(path_input, str(subdir)))
         await pilot.pause()
 
         assert screen.location == subdir.resolve()
-        assert str(screen.query_one("#tree", FilterableDirectoryTree).path) == str(subdir)
+        assert str(screen.query_one("#filedialogs-tree", FilterableDirectoryTree).path) == str(subdir)
 
 
 # -- SaveFile ---------------------------------------------------------------
@@ -201,7 +201,7 @@ async def test_save_file_no_prompt_for_a_new_filename(tmp_path: Path):
         await pilot.press("d")
         await pilot.pause()
 
-        await pilot.click("#select")
+        await pilot.click("#filedialogs-select")
         await pilot.pause()
 
     assert results == [(tmp_path / "new-file.txt").resolve()]
@@ -225,7 +225,7 @@ async def test_save_file_overwrite_prompt_accept(tmp_path: Path):
         await pilot.press("d")
         await pilot.pause()
 
-        await pilot.click("#select")
+        await pilot.click("#filedialogs-select")
         await pilot.pause()
 
         # The overwrite confirmation is its own MessageDialog, on top.
@@ -254,7 +254,7 @@ async def test_save_file_overwrite_prompt_decline_keeps_dialog_open(tmp_path: Pa
     async with app.run_test() as pilot:
         await pilot.press("d")
         await pilot.pause()
-        await pilot.click("#select")
+        await pilot.click("#filedialogs-select")
         await pilot.pause()
 
         await pilot.click("#no")

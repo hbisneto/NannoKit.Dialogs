@@ -27,6 +27,7 @@ class OpenFolder(FileSystemDialogBase):
         must_exist: bool = True,
         show_hidden: bool = False,
         callback: Callable[[Path | None], None] | None = None,
+        priority: int | None = None,
     ) -> None:
         """Show a Select Folder dialog.
 
@@ -44,6 +45,9 @@ class OpenFolder(FileSystemDialogBase):
             show_hidden: Show dotdirs. Defaults to ``False``.
             callback: Called with the selected ``Path``, or ``None``
                 if the dialog was cancelled.
+            priority: Optional explicit priority override (see
+                :class:`~nannokit.dialogs.core.DialogPriority`).
+                Defaults to ``DialogPriority.MEDIUM``.
 
         Note:
             Unlike :class:`OpenFile`, this dialog does not support
@@ -64,5 +68,11 @@ class OpenFolder(FileSystemDialogBase):
             accept_directories=True,
             glob_filters=None,
             callback=callback,  # type: ignore[arg-type]  # OpenFolder never multiselects; see class docstring.
+            priority=priority,
         )
         cls._present(instance)
+
+    @classmethod
+    def show_with_priority(cls, priority: int, *args, **kwargs) -> None:
+        """Convenience wrapper for :meth:`show` with an explicit priority."""
+        cls.show(*args, priority=priority, **kwargs)

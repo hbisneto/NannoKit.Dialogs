@@ -8,7 +8,9 @@ class MessageBoxIcon:
 
     Named after .NET's ``MessageBoxIcon`` for the familiar feel; each
     value also drives the dialog's border color and icon glyph (see
-    ``styles/messagebox.tcss`` and ``MessageDialog.ICONS``).
+    ``styles/messagebox.tcss`` and ``MessageDialog.ICONS``), and its
+    default :class:`~nannokit.dialogs.core.priority.DialogPriority`
+    tier (see ``MessageDialog._CRITICAL_TYPES``).
     """
 
     INFO = "info"

@@ -26,9 +26,19 @@ App once via :class:`~nannokit.dialogs.core.DialogManager`::
     class MyApp(App):
         def on_mount(self) -> None:
             DialogManager.attach(self)
+
+Isolation and priority
+-----------------------
+``messagebox`` and ``filedialogs`` never interrupt or cancel one
+another silently. Every dialog carries a :class:`~nannokit.dialogs.core.DialogPriority`
+tier, and a shared :class:`~nannokit.dialogs.core.DialogQueue` decides,
+whenever more than one dialog is requested around the same time,
+whether the new one is stacked on top immediately (higher priority)
+or queued to appear right after the current one is resolved (equal or
+lower priority). See ``nannokit.dialogs.core.queue`` for details.
 """
 
-from .core import DialogManager
+from .core import DialogManager, DialogPriority, DialogQueue
 from .filedialogs import(
     FileDialogResult,
     OpenFile, 
@@ -48,6 +58,8 @@ __all__ = [
     "Buttons",
     "MessageBoxIcon",
     "DialogManager",
+    "DialogQueue",
+    "DialogPriority",
 ]
 
-__version__ = "0.0.0"
+__version__ = "0.1.0"

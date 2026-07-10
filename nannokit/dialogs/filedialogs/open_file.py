@@ -44,6 +44,7 @@ class OpenFile(FileSystemDialogBase):
         show_hidden: bool = False,
         filters: list[str] | None = None,
         callback: Callable[[OpenFileResult], None] | None = None,
+        priority: int | None = None,
     ) -> None:
         """Show an Open File dialog.
 
@@ -68,6 +69,12 @@ class OpenFile(FileSystemDialogBase):
             callback: Called with the selected ``Path`` (or
                 ``list[Path]`` if ``multiselect``), or ``None`` if the
                 dialog was cancelled.
+            priority: Optional explicit priority override (see
+                :class:`~nannokit.dialogs.core.DialogPriority`).
+                Defaults to ``DialogPriority.MEDIUM`` - the tier every
+                file dialog uses - so it's only needed if this
+                particular dialog must outrank or yield to something
+                unusual.
         """
         instance = cls(
             location=initial_directory or ".",
@@ -83,5 +90,11 @@ class OpenFile(FileSystemDialogBase):
             accept_directories=False,
             glob_filters=filters,
             callback=callback,
+            priority=priority,
         )
         cls._present(instance)
+
+    @classmethod
+    def show_with_priority(cls, priority: int, *args, **kwargs) -> None:
+        """Convenience wrapper for :meth:`show` with an explicit priority."""
+        cls.show(*args, priority=priority, **kwargs)

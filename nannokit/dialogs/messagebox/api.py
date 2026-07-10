@@ -43,6 +43,7 @@ class MessageBoxAPI:
         buttons: list[str] | None = None,
         type: str = MessageBoxIcon.INFO,  # noqa: A002 - matches the public `type=` kwarg used at call sites
         callback: Callable[[str | None], None] | None = None,
+        priority: int | None = None,
     ) -> None:
         """Show a message dialog.
 
@@ -52,10 +53,21 @@ class MessageBoxAPI:
             buttons: Button labels, e.g. ``messagebox.buttons.YES_NO``.
                 Defaults to a single ``["OK"]`` button.
             type: One of ``messagebox.type.INFO`` / ``WARNING`` /
-                ``ERROR`` / ``SUCCESS``. Controls the icon and accent
-                color.
+                ``ERROR`` / ``SUCCESS``. Controls the icon, accent
+                color, and (unless ``priority`` is given explicitly)
+                the dialog's default priority tier - ``WARNING`` and
+                ``ERROR`` default to
+                :data:`~nannokit.dialogs.core.DialogPriority.HIGH`,
+                ``INFO`` and ``SUCCESS`` to
+                :data:`~nannokit.dialogs.core.DialogPriority.LOW`.
             callback: Called with the label of the pressed button, or
                 ``None`` if the dialog was cancelled (Escape).
+            priority: Optional explicit priority override (see
+                :class:`~nannokit.dialogs.core.DialogPriority`). Rarely
+                needed - the default derived from ``type`` is right
+                for almost every case - but available for the odd
+                INFO messagebox that genuinely must interrupt
+                something else, or a WARNING that shouldn't.
         """
         MessageDialog._present(
             MessageDialog(
@@ -64,5 +76,30 @@ class MessageBoxAPI:
                 buttons=buttons or Buttons.OK,
                 dialog_type=type,
                 callback=callback,
+                priority=priority,
             )
         )
+
+    @classmethod
+    def show_with_priority(
+        cls,
+        priority: int,
+        message: str,
+        title: str = "Message",
+        buttons: list[str] | None = None,
+        type: str = MessageBoxIcon.INFO,  # noqa: A002
+        callback: Callable[[str | None], None] | None = None,
+    ) -> None:
+        """Convenience wrapper for :meth:`show` with an explicit priority.
+
+        Identical to ``messagebox.show(..., priority=priority)`` -
+        provided for callers who find leading with the priority reads
+        more clearly at the call site, e.g.::
+
+            messagebox.show_with_priority(
+                DialogPriority.HIGH,
+                "Disk almost full.",
+                type=messagebox.type.WARNING,
+            )
+        """
+        cls.show(message, title, buttons, type=type, callback=callback, priority=priority)

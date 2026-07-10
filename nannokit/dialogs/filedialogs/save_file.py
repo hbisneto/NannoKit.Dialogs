@@ -11,7 +11,11 @@ different labels/flags like :class:`OpenFolder` is to
 don't, so it overrides :meth:`FileSystemDialogBase._confirm` rather
 than reusing the base implementation as-is - and along the way shows
 how a filesystem dialog can compose with ``messagebox`` from inside
-the package itself.
+the package itself. Because the overwrite confirmation is a WARNING
+messagebox, :class:`~nannokit.dialogs.core.DialogQueue` gives it a
+higher priority than the SaveFile dialog it was spawned from, so it
+is always stacked on top and answered before SaveFile can proceed -
+no extra wiring needed here for that guarantee.
 """
 
 from __future__ import annotations
@@ -95,6 +99,7 @@ class SaveFile:
         show_hidden: bool = False,
         filters: list[str] | None = None,
         callback: Callable[[Path | None], None] | None = None,
+        priority: int | None = None,
     ) -> None:
         """Show a Save File dialog.
 
@@ -110,6 +115,13 @@ class SaveFile:
                 existing files are shown while browsing.
             callback: Called with the chosen ``Path``, or ``None`` if
                 cancelled.
+            priority: Optional explicit priority override for the
+                SaveFile dialog itself (see
+                :class:`~nannokit.dialogs.core.DialogPriority`).
+                Defaults to ``DialogPriority.MEDIUM``. Does not affect
+                the overwrite confirmation, which always uses the
+                WARNING messagebox default (``HIGH``) so it can never
+                be silently skipped.
         """
         instance = _SaveFileScreen(
             location=initial_directory or ".",
@@ -124,5 +136,11 @@ class SaveFile:
             glob_filters=filters,
             callback=callback,
             confirm_overwrite=confirm_overwrite,
+            priority=priority,
         )
         _SaveFileScreen._present(instance)
+
+    @classmethod
+    def show_with_priority(cls, priority: int, *args, **kwargs) -> None:
+        """Convenience wrapper for :meth:`show` with an explicit priority."""
+        cls.show(*args, priority=priority, **kwargs)

@@ -20,19 +20,17 @@ FileSystemDialogBase {
     background: rgba(0, 0, 0, 0.65);
 }
 
-
 /* =========================
    DIALOG CONTAINER
 ========================= */
 
-#dialog {
+#filedialogs-dialog {
     width: 85%;
     height: 80%;
     background: $surface;
     border: round $accent;
     padding: 1 2;
 }
-
 
 /* =========================
    LABELS
@@ -44,47 +42,44 @@ FileSystemDialogBase {
     color: $primary;
 }
 
-
 /* =========================
    PATH INPUT
 ========================= */
 
-#path_input {
+#filedialogs-path_input {
     margin-bottom: 1;
     background: $background;
     color: $text;
     border: tall $muted;
 }
 
-#path_input:focus {
+#filedialogs-path_input:focus {
     border: tall $primary;
 }
-
 
 /* =========================
    TREE (DirectoryTree)
 ========================= */
 
-#tree {
+#filedialogs-tree {
     height: 1fr;
     margin-bottom: 1;
     border: round $muted;
     background: $background;
 }
 
-
 /* =========================
    FILENAME INPUT
 ========================= */
 
-#filename_input {
+#filedialogs-filename_input {
     margin-bottom: 1;
     background: $background;
     color: $text;
     border: tall $muted;
 }
 
-#filename_input:focus {
+#filedialogs-filename_input:focus {
     border: tall $primary;
 }
 
@@ -92,14 +87,14 @@ FileSystemDialogBase {
    BUTTON CONTAINER
 ========================= */
 
-#buttons {
+#filedialogs-buttons {
     height: auto;
     dock: bottom;
     align-horizontal: right;
     margin-top: 1;
 }
 
-#buttons Button {
+#filedialogs-buttons Button {
     min-width: 14;
     margin-left: 1;
     height: 3;
@@ -107,36 +102,34 @@ FileSystemDialogBase {
     content-align: center middle;
 }
 
-
 /* =========================
    BUTTON SELECT (Confirmar)
 ========================= */
 
-#buttons Button#select {
+#filedialogs-buttons Button#filedialogs-select {
     background: #22c55e;
     color: $surface;
     text-style: bold;
     border: round $muted;
 }
 
-#buttons Button#select:hover {
+#filedialogs-buttons Button#filedialogs-select:hover {
     background: #4ade80;
     color: $surface;
     border: round $muted;
 }
 
-
 /* =========================
    BUTTON CANCEL
 ========================= */
 
-#buttons Button#cancel {
+#filedialogs-buttons Button#filedialogs-cancel {
     background: $background;
     color: $muted;
     border: round $muted;
 }
 
-#buttons Button#cancel:hover {
+#filedialogs-buttons Button#filedialogs-cancel:hover {
     color: $text;
     border: round $primary;
     background: $accent;
